@@ -67,4 +67,15 @@ public class PartidaServiceImpl implements PartidaService {
         partidaRepository.save(entity);
         return mapper.resquestToEntity(entity);
     }
+
+    @Override
+    public void deletePartida(Long id) throws Exception {
+        log.info("Getting partida id-{}", id);
+        Optional<PartidaEntity> partidaById = partidaRepository.findById(id);
+
+        if (partidaById.isEmpty()) {
+            throw new Exception("Id não existe na base");
+        }
+        partidaRepository.deleteById(id);
+    }
 }
