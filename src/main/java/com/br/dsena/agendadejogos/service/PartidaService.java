@@ -1,6 +1,7 @@
 package com.br.dsena.agendadejogos.service;
 
-import com.br.dsena.agendadejogos.model.Partida;
+import com.br.dsena.agendadejogos.model.PartidaRequestDTO;
+import com.br.dsena.agendadejogos.model.PartidaResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.List;
 @Service
 public interface PartidaService {
 
-    List<Partida> getAllPartidas();
+    List<PartidaResponseDTO> getAllPartidas();
 
-    Partida insertPartida(Partida partidaRequest);
+    PartidaResponseDTO insertPartida(PartidaRequestDTO partidaEntityRequest);
+
+    PartidaResponseDTO getPartydaById(Long id) throws Exception;
 }
