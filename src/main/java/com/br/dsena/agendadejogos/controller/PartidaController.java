@@ -43,5 +43,9 @@ public class PartidaController {
         return ResponseEntity.ok().body(partidaService.insertPartida(partidaEntityRequest));
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<PartidaResponseDTO> updatePartida(@PathVariable("id") Long id, @RequestBody @Valid final PartidaRequestDTO partidaEntityRequest) throws Exception {
+        log.info("Método updatePartida incializado na classe Controller");
+        return ResponseEntity.ok().body(partidaService.updatePartida(id, partidaEntityRequest));
+    }
 }

@@ -14,4 +14,6 @@ public interface PartidaService {
     PartidaResponseDTO insertPartida(PartidaRequestDTO partidaEntityRequest);
 
     PartidaResponseDTO getPartydaById(Long id) throws Exception;
+
+    PartidaResponseDTO updatePartida(Long id, PartidaRequestDTO partidaEntityRequest) throws Exception;
 }
