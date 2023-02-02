@@ -31,6 +31,7 @@ public class PartidaServiceImpl implements PartidaService {
         List<PartidaEntity> partidaEntities = partidaRepository.findAll();
         if (partidaEntities.isEmpty()) {
             log.info("Lista de partidas está vazia");
+            throw new EntityNotFoundException("Lista de partidas está vazia.");
         }
         return mapper.resquestToEntity(partidaEntities);
     }
@@ -42,11 +43,11 @@ public class PartidaServiceImpl implements PartidaService {
     }
 
     public PartidaResponseDTO getPartydaById(Long id) throws Exception {
-        log.info("Getting partida id-{}", id);
+        log.info("Buscando partida id-{}", id);
         Optional<PartidaEntity> partidaById = partidaRepository.findById(id);
 
         if (partidaById.isEmpty()) {
-            throw new Exception("Id não existe na base");
+            throw new EntityNotFoundException("Id da partida não existe na base de dados.");
         } else {
             return mapper.resquestToEntity(partidaById.get());
         }
@@ -56,10 +57,10 @@ public class PartidaServiceImpl implements PartidaService {
     public PartidaResponseDTO updatePartida(Long id, PartidaRequestDTO partidaEntityRequest) throws Exception {
         Objects.requireNonNull(partidaEntityRequest, "request must not be null");
 
-        log.info("Updating partida id - {}, data - {}", id, partidaEntityRequest);
-        var optionalProfessor = partidaRepository.findById(id);
+        log.info("Atualizando partida id - {}, data - {}", id, partidaEntityRequest);
+        var partidaUpdate = partidaRepository.findById(id);
 
-        optionalProfessor.orElseThrow(() -> new EntityNotFoundException("Professor not found."));
+        partidaUpdate.orElseThrow(() -> new EntityNotFoundException("Partida não encontrada para atualizar, o id informado não existe."));
 
         PartidaEntity entity = mapper.toEntity(partidaEntityRequest);
         entity.setId(id);
@@ -70,11 +71,11 @@ public class PartidaServiceImpl implements PartidaService {
 
     @Override
     public void deletePartida(Long id) throws Exception {
-        log.info("Getting partida id-{}", id);
+        log.info("Buscando partida para excluir partida id-{}", id);
         Optional<PartidaEntity> partidaById = partidaRepository.findById(id);
 
         if (partidaById.isEmpty()) {
-            throw new Exception("Id não existe na base");
+            throw new EntityNotFoundException("Partida não encontrada para excluir, o id informado não existe.");
         }
         partidaRepository.deleteById(id);
     }
